@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import WeatherIcons from './WeatherIcons'; // Asegúrate de que la ruta sea correcta
 // Vamos a crear un componente funcional que obtenga el clima actual usando la API abierta de OpenMeteo
 const WeatherApp2 = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -137,11 +138,15 @@ const WeatherApp2 = () => {
       )}     
       {!loading && error && <p>Información no disponible actualmente</p>}     
       {weatherData && !loading && !error &&(
-        <div>
-          <h2>Ubicación: {weatherData.localidad || '-'}</h2>
+        <div>          
+          
+          <div className="weather-icon-container">
+            <h2>Ubicación: {weatherData.localidad || '-'}</h2>
+          <WeatherIcons weatherCode={weatherData.codigo_clima} />
+          </div>
           <p>Temperatura: {weatherData.temperatura || '-'} °C</p>
           <p>Humedad: {weatherData.humedad || '-'} %</p>
-          <p>Viento: {weatherData.velocidad_viento || '-'} Km/h</p>
+          <p>Viento: {weatherData.velocidad_viento || '-'} Km/h</p>            
         </div>
       )}
     </div>        
