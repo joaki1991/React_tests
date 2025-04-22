@@ -124,8 +124,7 @@ const WeatherApp2 = () => {
 
   
   return (    
-    <div>
-      <h1>Clima Actual</h1>
+    <div>      
       {loading && (
         <div>
           <p>Cargando...</p>
@@ -138,15 +137,21 @@ const WeatherApp2 = () => {
       )}     
       {!loading && error && <p>Información no disponible actualmente</p>}     
       {weatherData && !loading && !error &&(
-        <div>          
-          
-          <div className="weather-icon-container">
-            <h2>Ubicación: {weatherData.localidad || '-'}</h2>
-          <WeatherIcons weatherCode={weatherData.codigo_clima} />
-          </div>
-          <p>Temperatura: {weatherData.temperatura || '-'} °C</p>
-          <p>Humedad: {weatherData.humedad || '-'} %</p>
-          <p>Viento: {weatherData.velocidad_viento || '-'} Km/h</p>            
+        <div className='weather-info'>  
+          <h1>{weatherData.localidad || '-'}</h1>
+          <WeatherIcons weatherCode={weatherData.codigo_clima} />         
+          <p className='wetaher-temp'>{weatherData.temperatura || '-'} °C</p>
+          <div className='weather-extra'>
+            <div>
+            <p>Humedad</p>
+            <p>{weatherData.humedad || '-'} %</p>
+            </div>
+            <div className='divider'></div>
+            <div>
+            <p>Viento</p> 
+            <p>{weatherData.velocidad_viento || '-'} Km/h</p>
+            </div>
+          </div>                
         </div>
       )}
     </div>        

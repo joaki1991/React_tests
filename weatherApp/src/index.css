@@ -54,6 +54,33 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.weather-info{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow-y: auto;
+}
+
+.wetaher-temp{
+  font-size: 32px;
+  font-weight: bold;
+}
+.weather-extra{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.divider{
+  border-left: 1px solid #ccc; 
+  height: 50px;
+  margin: 0 10px;  
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
