@@ -16,7 +16,7 @@ const Header = ({ userName, userImage, onLogout, onMessages, logoImage }) => {
 
   return (
     <AppBar
-      position="fixed"
+      position="static"
       elevation={3}
       sx={{
         backgroundColor: '#e3f2fd',
@@ -24,9 +24,14 @@ const Header = ({ userName, userImage, onLogout, onMessages, logoImage }) => {
         paddingY: 2,
       }}
     >
-      <Toolbar sx={{ position: 'relative', flexDirection: isMobile ? 'column' : 'row', paddingX: 2 }}>
-        
-        {/* LOGO */}
+      <Toolbar
+        sx={{
+          position: 'relative',
+          flexDirection: isMobile ? 'column' : 'row',
+          paddingX: 2,
+        }}
+      >
+        {/* Logo */}
         <Box
           sx={{
             position: isMobile ? 'static' : 'absolute',
@@ -36,14 +41,13 @@ const Header = ({ userName, userImage, onLogout, onMessages, logoImage }) => {
             display: 'flex',
             justifyContent: 'center',
             mb: isMobile ? 2 : 0,
-            pointerEvents: 'none', // para que no interfiera con clicks
+            pointerEvents: 'none',
             zIndex: 0,
           }}
         >
           <img
             src={logoImage}
             alt="EducaCenter Logo"
-            loading="lazy"
             style={{
               maxWidth: '150px',
               width: '100%',
@@ -52,11 +56,10 @@ const Header = ({ userName, userImage, onLogout, onMessages, logoImage }) => {
           />
         </Box>
 
-        {/* CONTENEDOR PRINCIPAL (usuario + iconos) */}
+        {/* Usuario + Iconos */}
         <Box
           sx={{
             display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             width: '100%',
@@ -64,55 +67,29 @@ const Header = ({ userName, userImage, onLogout, onMessages, logoImage }) => {
             gap: isMobile ? 1.5 : 0,
           }}
         >
-          {/* Usuario */}
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1,
-              '&:hover': {
-                backgroundColor: '#bbdefb',
-                borderRadius: 1,
-              },
-              px: 1,
-              py: 0.5,
-            }}
-          >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 1, py: 0.5 }}>
             <Avatar src={userImage} alt={userName}>
               {userName?.[0]}
             </Avatar>
-            <Typography variant="body1" sx={{ fontWeight: 500 }}>
-              {userName}
-            </Typography>
+            <IconButton onClick={onMessages} sx={{ color: '#0d47a1', '&:hover': { backgroundColor: '#bbdefb' }, borderRadius: 8 }}>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontWeight: 500,                         
+                  px: 1,
+                  py: 1,
+                }}
+              >
+                {userName}
+              </Typography>
+            </IconButton>
           </Box>
 
-          {/* Iconos */}
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 1.5,
-            }}
-          >
-            <IconButton
-              onClick={onMessages}
-              sx={{
-                color: '#0d47a1',
-                '&:hover': {
-                  backgroundColor: '#bbdefb',
-                },
-              }}
-            >
+          <Box sx={{ display: 'flex', gap: 1.5 }}>
+            <IconButton onClick={onMessages} sx={{ color: '#0d47a1', '&:hover': { backgroundColor: '#bbdefb' } }}>
               <MailIcon />
             </IconButton>
-            <IconButton
-              onClick={onLogout}
-              sx={{
-                color: '#0d47a1',
-                '&:hover': {
-                  backgroundColor: '#bbdefb',
-                },
-              }}
-            >
+            <IconButton onClick={onLogout} sx={{ color: '#0d47a1', '&:hover': { backgroundColor: '#bbdefb' } }}>
               <LogoutIcon />
             </IconButton>
           </Box>
