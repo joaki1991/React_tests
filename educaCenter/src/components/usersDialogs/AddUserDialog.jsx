@@ -59,10 +59,7 @@ const AddUserDialog = ({ open, onClose }) => {
           open: true,
           message: 'Usuario añadido correctamente',
           severity: 'success'
-        });
-        
-        // Recargar la página después de un submit exitoso
-        window.location.reload(); 
+        });               
   
         handleCancel(); // Limpia el formulario
       })

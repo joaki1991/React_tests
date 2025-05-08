@@ -114,6 +114,27 @@ function UsersAdmin({ onLogout }) {
     </Box>
   );
 
+  // Función para recargar la lista de usuarios tras una acción (agregar, editar, eliminar)
+  const reloadUsers = () => {
+    setLoading(true);
+    api.get('/users.php')
+      .then(res => {
+        if (Array.isArray(res.data)) {
+          setUsers(res.data);
+        } else {
+          console.warn('Respuesta inesperada:', res.data);
+          setUsers([]);
+        }
+      })
+      .catch(err => {
+        console.error('Error al cargar usuarios:', err);
+        setUsers([]);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <Box
       sx={{
@@ -139,10 +160,10 @@ function UsersAdmin({ onLogout }) {
       </SidePanelLayout>
 
       {/* Diálogos externos */}
-      <AddUserDialog open={addDialogOpen} onClose={() => setAddDialogOpen(false)} />
-      <EditUserDialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)} user={selectedUser} />
-      <DeleteUserDialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)} user={selectedUser} />
-      <LinkUserDialog open={linkDialogOpen} onClose={() => setLinkDialogOpen(false)} user={selectedUser} />
+      <AddUserDialog open={addDialogOpen} onClose={() => { setAddDialogOpen(false); reloadUsers(); }} />
+      <EditUserDialog open={editDialogOpen} onClose={() => { setEditDialogOpen(false); reloadUsers(); }} user={selectedUser} />
+      <DeleteUserDialog open={deleteDialogOpen} onClose={() => { setDeleteDialogOpen(false); reloadUsers(); }} user={selectedUser} />
+      <LinkUserDialog open={linkDialogOpen} onClose={() => { setLinkDialogOpen(false); reloadUsers(); }} user={selectedUser} />
 
       {/* Diálogos existentes */}
       <NewPasswordDialog
