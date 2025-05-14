@@ -57,6 +57,7 @@ const Header = ({ userName, userImage, onLogout, onMessages, logoImage }) => {
         </Box>
 
         {/* Usuario + Iconos */}
+         {/* Usuario + Iconos */}
         <Box
           sx={{
             display: 'flex',
@@ -68,14 +69,24 @@ const Header = ({ userName, userImage, onLogout, onMessages, logoImage }) => {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, px: 1, py: 0.5 }}>
-            <Avatar src={userImage} alt={userName}>
-              {userName?.[0]}
-            </Avatar>
-            <IconButton onClick={onMessages} sx={{ color: '#0d47a1', '&:hover': { backgroundColor: '#bbdefb' }, borderRadius: 8 }}>
+            <IconButton>
+              <Avatar src={userImage} alt={userName} sx={{ width: 60, height: 60, backgroundColor: 'grey' }}                
+              >
+                {userName?.[0]}
+              </Avatar>
+            </IconButton>
+            <IconButton sx={{ color: '#FFFFFF', '&:hover': { backgroundColor: '#1976d2' }, borderRadius: 8 }}>
               <Typography
-                variant="body1"
+                variant="body2"
+                noWrap
+                title={userName}
                 sx={{
-                  fontWeight: 500,                         
+                  fontWeight: 700,
+                  color: '#FFFFFF',
+                  maxWidth: isMobile ? 100 : 300, // Ajusta el ancho según el tamaño de pantalla
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
                   px: 1,
                   py: 1,
                 }}

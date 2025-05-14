@@ -59,7 +59,7 @@ function App() {
 
   const header = (
     <Header
-      userName="Juan Pérez"
+      userName="Juan Pérez Fernandez"
       userImage="https://i.pravatar.cc/150?img=2"
       onLogout={() => console.log('Logout')}
       onMessages={() => console.log('Messages')}
