@@ -9,7 +9,7 @@ import {
   Snackbar,
   Alert
 } from '@mui/material';
-import api from '../api/axios';
+import api from '../../api/axios';
 
 const DeleteUserDialog = ({ open, onClose, user, onUserDeleted }) => {
   const [snackbar, setSnackbar] = React.useState({
@@ -19,7 +19,9 @@ const DeleteUserDialog = ({ open, onClose, user, onUserDeleted }) => {
   });
 
   const handleDelete = () => {
-    api.delete(`/users.php?id=${user.id}`) // Hacemos la petición DELETE con el ID del usuario
+      api.delete('/users.php', {
+        data: { id: user.id } // El id va en el body como JSON
+      })
       .then(()=> {
         setSnackbar({
           open: true,
@@ -48,15 +50,21 @@ const DeleteUserDialog = ({ open, onClose, user, onUserDeleted }) => {
       <Dialog open={open} onClose={onClose}>
         <DialogTitle>Confirmación de eliminación</DialogTitle>
         <DialogContent>
-          <Typography variant="body1">
-            ¿Estás seguro de que deseas eliminar a {user.name} {user.surname}?
-          </Typography>
+          {user ? (
+            <Typography variant="body1">
+              ¿Estás seguro de que deseas eliminar a {user.name} {user.surname}?
+            </Typography>
+          ) : (
+            <Typography variant="body1">
+              Cargando datos del usuario...
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose} color="secondary">
             Cancelar
           </Button>
-          <Button onClick={handleDelete} color="error" variant="contained">
+          <Button onClick={handleDelete} color="error" variant="contained" disabled={!user}>
             Borrar
           </Button>
         </DialogActions>

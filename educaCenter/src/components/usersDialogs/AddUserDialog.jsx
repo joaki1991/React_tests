@@ -14,7 +14,7 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
-import api from '../api/axios';
+import api from '../../api/axios';
 
 const AddUserDialog = ({ open, onClose }) => {
   const [formData, setFormData] = useState({

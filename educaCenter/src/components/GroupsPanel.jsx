@@ -18,7 +18,12 @@ const GroupsPanel = ({ groups, onAdd, onEdit, onDelete }) => {
     <Box p={2}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <Typography variant="h5">Gestión de Grupos</Typography>
-        <Button variant="contained" color="primary" onClick={onAdd}>
+        <Button
+          type="button"
+          variant="contained"
+          color="primary"
+          onClick={onAdd}
+        >
           Añadir Grupo
         </Button>
       </Box>
@@ -39,6 +44,7 @@ const GroupsPanel = ({ groups, onAdd, onEdit, onDelete }) => {
                 <TableCell>{group.description || '-'}</TableCell>
                 <TableCell align="center">
                   <Button
+                    type="button"
                     variant="outlined"
                     color="primary"
                     size="small"
@@ -49,6 +55,7 @@ const GroupsPanel = ({ groups, onAdd, onEdit, onDelete }) => {
                     Editar
                   </Button>
                   <Button
+                    type="button"
                     variant="outlined"
                     color="error"
                     size="small"

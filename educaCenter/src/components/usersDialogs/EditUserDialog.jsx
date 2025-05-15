@@ -14,9 +14,9 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
-import api from '../api/axios';
+import api from '../../api/axios';
 
-const EditUserDialog = ({ open, onClose, userId, onUserUpdated }) => {
+const EditUserDialog = ({ open, onClose, user, onUserUpdated }) => {
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
@@ -29,29 +29,17 @@ const EditUserDialog = ({ open, onClose, userId, onUserUpdated }) => {
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
   useEffect(() => {
-    if (userId) {
-      // Obtener los datos del usuario al abrir el modal
-      api.get(`/users.php?id=${userId}`)
-        .then(res => {
-          const user = res.data;
-          setFormData({
-            name: user.name || '',
-            surname: user.surname || '',
-            email: user.email || '',
-            role: user.role || '',
-            password: '' // No se muestra la contraseña en el modal
-          });
-        })
-        .catch(err => {
-          console.error('Error al cargar los datos del usuario:', err);
-          setSnackbar({
-            open: true,
-            message: 'Error al cargar los datos del usuario',
-            severity: 'error'
-          });
-        });
+    if (user) {
+      // Si se pasa un usuario, actualizar el formulario con los datos del usuario
+      setFormData({
+        name: user.name || '',
+        surname: user.surname || '',
+        email: user.email || '',
+        role: user.role || '',
+        password: user.password || '' 
+      });
     }
-  }, [userId]);
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,16 +57,16 @@ const EditUserDialog = ({ open, onClose, userId, onUserUpdated }) => {
 
   const handleSubmit = () => {
     if (!validate()) return;
-  
+
     const payload = {
-      id: userId,
+      id: user.id,  // Usamos el id del usuario pasado como prop
       name: formData.name.trim(),
       surname: formData.surname.trim(),
       email: formData.email?.trim() || '',
       role: formData.role.trim(),
       password: formData.password || ''
     };
-  
+
     api.put('/users.php', payload) // Cambié de POST a PUT aquí
       .then(() => {
         setSnackbar({
@@ -86,11 +74,12 @@ const EditUserDialog = ({ open, onClose, userId, onUserUpdated }) => {
           message: 'Usuario editado correctamente',
           severity: 'success'
         });
-        
+
+        // Llamamos a la función onUserUpdated si se ha pasado
         if (typeof onUserUpdated === 'function') {
-          onUserUpdated(); // Notifica al padre para que recargue
+          onUserUpdated(); // Notifica al componente padre para que recargue la lista de usuarios
         }
-  
+
         handleCancel(); // Limpia el formulario
       })
       .catch(err => {
@@ -106,7 +95,7 @@ const EditUserDialog = ({ open, onClose, userId, onUserUpdated }) => {
   const handleCancel = () => {
     setFormData({ name: '', surname: '', email: '', role: '', password: '' });
     setErrors({});
-    onClose();
+    onClose(); // Cierra el modal
   };
 
   return (
