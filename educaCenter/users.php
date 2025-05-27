@@ -16,17 +16,22 @@ switch ($method) {
         // En caso de una peticion GET, voy a coprobar los parametros que me llegan por la URL para devolver toda la informacion del usuario
         // a excepcion de la contraseña. Esta consulta podrá realizarla cualquier usuario autenticado
         $query = "SELECT 
-          u.id,
-          u.name,
-          u.surname,
-          u.email,
-          u.role,
-          u.created_at,
-          g.name AS group_name
-        FROM users u
-        LEFT JOIN students s ON u.id = s.user_id
-        LEFT JOIN teachers t ON u.id = t.user_id
-        LEFT JOIN groups g ON g.id = COALESCE(s.group_id, t.group_id)
+            u.id,
+            u.name,
+            u.surname,
+            u.email,
+            u.role,
+            u.created_at,
+            g.name AS group_name,
+            p.id AS parent_id,
+            pu.name AS parent_name,
+            pu.surname AS parent_surname
+            FROM users u
+            LEFT JOIN students s ON u.id = s.user_id
+            LEFT JOIN teachers t ON u.id = t.user_id
+            LEFT JOIN groups g ON g.id = COALESCE(s.group_id, t.group_id)
+            LEFT JOIN parents p ON p.child_id = u.id
+            LEFT JOIN users pu ON pu.id = p.user_id;
         ";
         $params = []; // Inicializo un array vacio para los parametros que voy a pasar a la consulta
 

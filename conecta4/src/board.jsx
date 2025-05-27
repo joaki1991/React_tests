@@ -79,11 +79,11 @@ const Board = () => {
     // Defino la función que muestra el dialogo de victoria
     function renderDialog(){
         return(
-            <Dialog open={gameOver} onClose={() => resetBoard}>
+            <Dialog open={gameOver}>
                 <DialogTitle>¡Victoria!</DialogTitle>
                 <DialogContent>
                     <p>{currentPlayer === PLAYER_1 ? "El jugador "+PLAYER_1+" ha ganado!" : "El jugador "+PLAYER_2+" ha ganado!"}</p>
-                    <button onClick={()=>setGameOver(false)}>Cerrar</button>
+                    <button onClick={resetBoard}>Cerrar</button>
                 </DialogContent>
             </Dialog>
         );
@@ -140,8 +140,12 @@ const Board = () => {
     return(
         <div className="game-container">
             <h1>Conecta 4</h1>
+            <button onClick={resetBoard}>Reiniciar Juego</button>
             {renderBoard()}
             {renderDialog()} 
+            <div>
+                Jugador Actual: {currentPlayer}
+            </div>
         </div>
     );
 }
